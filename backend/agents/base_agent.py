@@ -19,15 +19,8 @@ class BaseAgent:
             model_name: OpenAI model to use
             temperature: Temperature for LLM responses
         """
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY environment variable is required")
-        
-        self.llm = ChatOpenAI(
-            model=model_name,
-            temperature=temperature,
-            api_key=api_key
-        )
+        from ..utils.openrouter_client import create_llm
+        self.llm = create_llm(model_name=model_name, temperature=temperature)
         self.model_name = model_name
         self.temperature = temperature
     
