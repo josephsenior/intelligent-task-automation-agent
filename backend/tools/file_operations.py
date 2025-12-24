@@ -2,10 +2,8 @@
 File Operations Tool - Handles file system operations.
 """
 
-import os
-import shutil
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any, Dict
 
 
 class FileOperationsTool:

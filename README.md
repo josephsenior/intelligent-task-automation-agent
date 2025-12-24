@@ -1,4 +1,9 @@
-# Intelligent Task Automation Agent
+﻿#  Intelligent Task Automation Agent
+
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
+[![LangChain](https://img.shields.io/badge/LangChain-0.1+-orange.svg)](https://www.langchain.com/)
 
 An autonomous AI agent system that takes high-level goals, breaks them down into actionable tasks, plans execution, adapts to obstacles, learns from experience, and knows when to ask for human help. This demonstrates advanced agentic AI patterns working together in a production-ready system.
 
@@ -51,7 +56,7 @@ pip install -r requirements.txt
 3. Set up environment variables:
 ```bash
 cp .env.example .env
-# Edit .env and add your OPENAI_API_KEY
+# Edit .env and add your GEMINI_API_KEY
 ```
 
 ## Usage
@@ -133,11 +138,29 @@ This project showcases multiple agentic AI patterns:
 - Performance analytics dashboard
 - Collaborative goal execution
 
-## License
+##  Tech Stack
 
-MIT License
+- **LangChain**: Agent framework and orchestration
+- **Streamlit**: Web UI
+- **Python 3.8+**: Core language
+- **File Operations**: File system tools
+- **Git Integration**: Version control tools
+- **Web Tools**: HTTP requests and web scraping
 
-## Contributing
+##  Use Cases
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- **Project Setup**: Automate project initialization and setup
+- **Task Automation**: Execute complex multi-step tasks
+- **Code Generation**: Generate and organize code files
+- **Workflow Automation**: Automate repetitive workflows
+- **Goal Achievement**: Break down high-level goals into actions
+
+##  Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+##  License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 

@@ -2,9 +2,10 @@
 Data models for the Task Automation Agent system.
 """
 
-from typing import List, Optional, Dict, Any, Literal
 from datetime import datetime
 from enum import Enum
+from typing import Any, Dict, List, Optional
+
 from pydantic import BaseModel, Field
 
 

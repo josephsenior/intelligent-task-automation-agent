@@ -4,9 +4,10 @@ Implements Reasoning and Reflection patterns.
 """
 
 import json
-from typing import Dict, Any, List
-from .base_agent import BaseAgent
+from typing import Any, Dict
+
 from ..models import ReasoningResult, ReasoningStep
+from .base_agent import BaseAgent
 
 
 class ReasoningAgent(BaseAgent):

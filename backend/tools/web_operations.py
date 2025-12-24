@@ -2,9 +2,10 @@
 Web Operations Tool - Handles web requests and operations.
 """
 
-import requests
-from typing import Dict, Any, Optional
 import time
+from typing import Any, Dict, Optional
+
+import requests
 
 
 class WebOperationsTool:

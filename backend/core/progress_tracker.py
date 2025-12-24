@@ -2,9 +2,10 @@
 Progress Tracker - Tracks execution progress and provides status updates.
 """
 
-from typing import Dict, Any, List
 from datetime import datetime
-from ..models import Goal, Task, TaskStatus, ExecutionPlan
+from typing import Any, Dict, List
+
+from ..models import ExecutionPlan, Goal, TaskStatus
 
 
 class ProgressTracker:

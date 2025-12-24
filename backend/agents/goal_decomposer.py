@@ -5,9 +5,10 @@ Implements Goal Setting and Planning patterns.
 
 import json
 import uuid
-from typing import List, Dict, Any
-from .base_agent import BaseAgent
+from typing import Any, Dict, List
+
 from ..models import Goal, Task, TaskPriority
+from .base_agent import BaseAgent
 
 
 class GoalDecomposerAgent(BaseAgent):

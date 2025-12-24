@@ -2,10 +2,11 @@
 Tool Registry - Manages and provides access to all tools.
 """
 
-from typing import Dict, Any, Optional
+from typing import Any, Dict
+
+from ..tools.command_executor import CommandExecutorTool
 from ..tools.file_operations import FileOperationsTool
 from ..tools.git_operations import GitOperationsTool
-from ..tools.command_executor import CommandExecutorTool
 from ..tools.web_operations import WebOperationsTool
 
 

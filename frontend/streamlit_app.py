@@ -2,16 +2,16 @@
 Streamlit UI for the Task Automation Agent.
 """
 
-import streamlit as st
 import sys
 from pathlib import Path
+
+import streamlit as st
 
 # Add backend to path
 backend_path = Path(__file__).parent.parent / "backend"
 sys.path.insert(0, str(backend_path.parent))
 
-from backend.core.orchestrator import TaskOrchestrator
-from backend.models import TaskStatus, HumanInputRequest
+from backend.core.orchestrator import TaskOrchestrator  # noqa: E402
 
 
 def main():

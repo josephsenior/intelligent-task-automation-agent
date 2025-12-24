@@ -4,10 +4,11 @@ Implements Adaptation, Memory, and Reflection patterns.
 """
 
 import json
-from typing import List, Dict, Any
 from datetime import datetime
+from typing import List
+
+from ..models import AdaptationUpdate, ExecutionResult, Goal, LearnedPattern
 from .base_agent import BaseAgent
-from ..models import Goal, ExecutionResult, LearnedPattern, AdaptationUpdate, TaskStatus
 
 
 class AdaptationAgent(BaseAgent):
@@ -36,7 +37,7 @@ class AdaptationAgent(BaseAgent):
         self.log(f"Analyzing execution results for goal: {goal.description}")
         
         # Analyze outcomes
-        success_rate = self._calculate_success_rate(execution_results)
+        _ = self._calculate_success_rate(execution_results)
         patterns = self._identify_patterns(goal, execution_results, previous_patterns)
         recommendations = self._generate_recommendations(goal, execution_results, patterns)
         

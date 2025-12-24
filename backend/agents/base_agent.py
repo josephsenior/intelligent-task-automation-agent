@@ -2,9 +2,8 @@
 Base agent class providing common functionality for all agents.
 """
 
-import os
-from typing import Dict, Any, Optional
-from langchain_openai import ChatOpenAI
+from typing import Any, Dict
+
 from langchain.prompts import ChatPromptTemplate
 
 
@@ -16,7 +15,7 @@ class BaseAgent:
         Initialize the base agent.
         
         Args:
-            model_name: OpenAI model to use
+            model_name: Gemini model to use
             temperature: Temperature for LLM responses
         """
         from ..utils.openrouter_client import create_llm
@@ -84,4 +83,5 @@ class BaseAgent:
     def log(self, message: str, level: str = "INFO"):
         """Log a message (can be overridden for actual logging)."""
         print(f"[{level}] {self.__class__.__name__}: {message}")
+
 

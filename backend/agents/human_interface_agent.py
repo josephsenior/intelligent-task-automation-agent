@@ -3,11 +3,11 @@ Human Interface Agent - Manages human interaction and escalation.
 Implements Human-in-the-Loop and Routing patterns.
 """
 
-from typing import Dict, Any, Optional, List
-from datetime import datetime
 import uuid
+from typing import Any, Dict, List, Optional
+
+from ..models import Goal, HumanInputRequest, Task
 from .base_agent import BaseAgent
-from ..models import HumanInputRequest, Task, Goal
 
 
 class HumanInterfaceAgent(BaseAgent):

@@ -4,11 +4,11 @@ Implements Memory pattern.
 """
 
 import json
-import os
-from pathlib import Path
-from typing import List, Dict, Any, Optional
 from datetime import datetime
-from ..models import LearnedPattern, GoalSession, Goal
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+from ..models import Goal, GoalSession, LearnedPattern
 
 
 class MemoryManager:
@@ -149,7 +149,7 @@ class MemoryManager:
             
             # Reconstruct session from data
             # This is simplified - in production you'd want proper deserialization
-            from ..models import GoalSession, ExecutionPlan, ExecutionResult, AdaptationUpdate, HumanInputRequest, ReasoningResult
+            from ..models import ExecutionPlan, GoalSession
             
             goal = Goal(**session_data["goal"])
             execution_plan = ExecutionPlan(**session_data["execution_plan"])

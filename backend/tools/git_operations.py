@@ -2,8 +2,9 @@
 Git Operations Tool - Handles Git repository operations.
 """
 
-from typing import Dict, Any, Optional
 from pathlib import Path
+from typing import Any, Dict
+
 from .command_executor import CommandExecutorTool
 
 

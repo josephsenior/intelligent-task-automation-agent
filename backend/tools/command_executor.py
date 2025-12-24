@@ -2,10 +2,9 @@
 Command Executor Tool - Executes system commands safely.
 """
 
-import subprocess
 import shlex
-from typing import Dict, Any, Optional
-import os
+import subprocess
+from typing import Any, Dict, Optional
 
 
 class CommandExecutorTool:

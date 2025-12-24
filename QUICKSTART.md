@@ -12,8 +12,8 @@ pip install -r requirements.txt
 # Copy the example file
 cp .env.example .env
 
-# Edit .env and add your OpenAI API key
-OPENAI_API_KEY=sk-your-key-here
+# Edit .env and add your Gemini API key
+GEMINI_API_KEY=sk-your-key-here
 ```
 
 ## Running the Application
@@ -97,7 +97,7 @@ The system will:
 
 ## Troubleshooting
 
-**Error: "OPENAI_API_KEY environment variable is required"**
+**Error: "GEMINI_API_KEY environment variable is required"**
 - Make sure you've created a `.env` file with your API key
 - Restart the Streamlit app after creating the `.env` file
 
@@ -116,4 +116,5 @@ The system will:
 - Review learned patterns to understand how the system improves
 - Check the ARCHITECTURE.md for detailed system design
 - Explore the code to understand how each agent works
+
 

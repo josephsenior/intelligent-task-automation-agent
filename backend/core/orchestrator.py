@@ -2,18 +2,22 @@
 Task Orchestrator - Coordinates all agents and manages the execution workflow.
 """
 
-from typing import Dict, Any, Optional, Callable
 from datetime import datetime
-from ..models import (
-    Goal, GoalSession, ExecutionPlan, ExecutionResult,
-    TaskStatus, HumanInputRequest
-)
-from ..agents.goal_decomposer import GoalDecomposerAgent
-from ..agents.planner_agent import PlannerAgent
-from ..agents.executor_agent import ExecutorAgent
+from typing import Any, Callable, Dict, Optional
+
 from ..agents.adaptation_agent import AdaptationAgent
+from ..agents.executor_agent import ExecutorAgent
+from ..agents.goal_decomposer import GoalDecomposerAgent
 from ..agents.human_interface_agent import HumanInterfaceAgent
+from ..agents.planner_agent import PlannerAgent
 from ..agents.reasoning_agent import ReasoningAgent
+from ..models import (
+    ExecutionPlan,
+    ExecutionResult,
+    GoalSession,
+    HumanInputRequest,
+    TaskStatus,
+)
 from .memory_manager import MemoryManager
 from .progress_tracker import ProgressTracker
 from .tool_registry import ToolRegistry
