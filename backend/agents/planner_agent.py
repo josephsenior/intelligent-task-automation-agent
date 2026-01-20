@@ -12,54 +12,62 @@ from .base_agent import BaseAgent
 
 class PlannerAgent(BaseAgent):
     """Agent that creates execution plans from task breakdowns."""
-    
+
     def __init__(self):
         super().__init__(model_name="gpt-4", temperature=0.2)
-    
-    def create_plan(self, goal: Goal, learned_patterns: List[Dict[str, Any]] = None) -> ExecutionPlan:
+
+    def create_plan(
+        self, goal: Goal, learned_patterns: List[Dict[str, Any]] = None
+    ) -> ExecutionPlan:
         """
         Create an execution plan from a goal's tasks.
-        
+
         Args:
             goal: Goal with decomposed tasks
             learned_patterns: Optional patterns learned from past executions
-            
+
         Returns:
             ExecutionPlan with ordered tasks and parallel groups
         """
         self.log(f"Creating execution plan for goal: {goal.description}")
-        
+
         prompt = self._create_planning_prompt(goal, learned_patterns)
         response = self._call_llm(prompt)
-        
+
         try:
             plan_data = self._parse_json_response(response)
             plan = self._create_plan_from_response(goal, plan_data)
-            
-            self.log(f"Created plan with {len(plan.tasks)} tasks in {len(plan.parallel_groups)} parallel groups")
+
+            self.log(
+                f"Created plan with {len(plan.tasks)} tasks in {len(plan.parallel_groups)} parallel groups"
+            )
             return plan
-            
+
         except Exception as e:
             self.log(f"Error creating plan: {str(e)}", "ERROR")
             # Fallback: simple sequential plan
             return self._create_fallback_plan(goal)
-    
-    def _create_planning_prompt(self, goal: Goal, learned_patterns: List[Dict[str, Any]] = None) -> str:
+
+    def _create_planning_prompt(
+        self, goal: Goal, learned_patterns: List[Dict[str, Any]] = None
+    ) -> str:
         """Create the prompt for planning."""
         tasks_json = []
         for task in goal.tasks:
-            tasks_json.append({
-                "id": task.id,
-                "description": task.description,
-                "priority": task.priority.value,
-                "dependencies": task.dependencies,
-                "tool": task.tool
-            })
-        
+            tasks_json.append(
+                {
+                    "id": task.id,
+                    "description": task.description,
+                    "priority": task.priority.value,
+                    "dependencies": task.dependencies,
+                    "tool": task.tool,
+                }
+            )
+
         patterns_str = ""
         if learned_patterns:
             patterns_str = f"\n\nLearned Patterns from Past Executions:\n{json.dumps(learned_patterns, indent=2)}"
-        
+
         return f"""You are an expert at creating optimal execution plans for task automation.
 
 Your job is to analyze a set of tasks and create an efficient execution plan that:
@@ -91,12 +99,14 @@ Return your response as a JSON object with this structure:
 }}
 
 The parallel_groups array should contain groups of task IDs that can be executed simultaneously. Tasks in the same group have no dependencies on each other."""
-    
-    def _create_plan_from_response(self, goal: Goal, plan_data: Dict[str, Any]) -> ExecutionPlan:
+
+    def _create_plan_from_response(
+        self, goal: Goal, plan_data: Dict[str, Any]
+    ) -> ExecutionPlan:
         """Create an ExecutionPlan from the planning response."""
         # Create a map of task IDs to tasks
         task_map = {task.id: task for task in goal.tasks}
-        
+
         # Update task order if provided
         ordered_tasks = []
         if "task_order" in plan_data:
@@ -106,31 +116,31 @@ The parallel_groups array should contain groups of task IDs that can be executed
         else:
             # Use original order if no order specified
             ordered_tasks = goal.tasks
-        
+
         # Add any tasks not in the order
         for task in goal.tasks:
             if task not in ordered_tasks:
                 ordered_tasks.append(task)
-        
+
         # Extract parallel groups
         parallel_groups = plan_data.get("parallel_groups", [])
-        
+
         # Validate parallel groups contain valid task IDs
         valid_parallel_groups = []
         for group in parallel_groups:
             valid_group = [tid for tid in group if tid in task_map]
             if valid_group:
                 valid_parallel_groups.append(valid_group)
-        
+
         plan = ExecutionPlan(
             goal_id=goal.id,
             tasks=ordered_tasks,
             parallel_groups=valid_parallel_groups,
-            estimated_duration=plan_data.get("estimated_duration_minutes")
+            estimated_duration=plan_data.get("estimated_duration_minutes"),
         )
-        
+
         return plan
-    
+
     def _create_fallback_plan(self, goal: Goal) -> ExecutionPlan:
         """Create a simple sequential fallback plan."""
         # Sort by priority (critical -> high -> medium -> low)
@@ -138,18 +148,16 @@ The parallel_groups array should contain groups of task IDs that can be executed
             TaskPriority.CRITICAL: 0,
             TaskPriority.HIGH: 1,
             TaskPriority.MEDIUM: 2,
-            TaskPriority.LOW: 3
+            TaskPriority.LOW: 3,
         }
-        
+
         sorted_tasks = sorted(
-            goal.tasks,
-            key=lambda t: priority_order.get(t.priority, 2)
+            goal.tasks, key=lambda t: priority_order.get(t.priority, 2)
         )
-        
+
         return ExecutionPlan(
             goal_id=goal.id,
             tasks=sorted_tasks,
             parallel_groups=[],
-            estimated_duration=None
+            estimated_duration=None,
         )
-

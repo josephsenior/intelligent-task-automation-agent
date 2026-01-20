@@ -10,11 +10,12 @@ from typing import Optional
 
 try:
     from langchain.chat_models import GooglePalm  # type: ignore
+
     _HAS_GOOGLE_PALM = True
 except Exception:
     _HAS_GOOGLE_PALM = False
 
-from langchain_compat import init_chat_model
+from langchain.chat_models import init_chat_model
 
 
 def create_llm(
@@ -47,7 +48,9 @@ def create_llm(
 
         if importlib.util.find_spec("langchain_google_genai"):
             base_kwargs = {k: v for k, v in kwargs.items() if k != "model"}
-            return init_chat_model(model=gemini_model, model_provider="google_genai", **base_kwargs)
+            return init_chat_model(
+                model=gemini_model, model_provider="google_genai", **base_kwargs
+            )
     except Exception:
         pass
 
@@ -57,7 +60,5 @@ def create_llm(
         raise ImportError(
             "Could not initialize Gemini model via LangChain. Install the appropriate "
             "provider integration (e.g. langchain-google-genai or langchain-google-vertexai) "
-            "or use a compatible langchain. Original error: "
-            + str(e)
+            "or use a compatible langchain. Original error: " + str(e)
         )
-

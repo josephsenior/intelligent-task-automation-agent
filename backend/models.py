@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 
 class TaskStatus(str, Enum):
     """Status of a task."""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -21,6 +22,7 @@ class TaskStatus(str, Enum):
 
 class TaskPriority(str, Enum):
     """Priority level of a task."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -29,6 +31,7 @@ class TaskPriority(str, Enum):
 
 class Task(BaseModel):
     """Represents a single task in the execution plan."""
+
     id: str
     description: str
     status: TaskStatus = TaskStatus.PENDING
@@ -46,6 +49,7 @@ class Task(BaseModel):
 
 class Goal(BaseModel):
     """Represents a high-level goal."""
+
     id: str
     description: str
     status: TaskStatus = TaskStatus.PENDING
@@ -60,6 +64,7 @@ class Goal(BaseModel):
 
 class ExecutionPlan(BaseModel):
     """Represents an execution plan for a goal."""
+
     goal_id: str
     tasks: List[Task]
     parallel_groups: List[List[str]] = Field(default_factory=list)
@@ -69,6 +74,7 @@ class ExecutionPlan(BaseModel):
 
 class ExecutionResult(BaseModel):
     """Result of executing a task."""
+
     task_id: str
     success: bool
     output: Optional[str] = None
@@ -79,6 +85,7 @@ class ExecutionResult(BaseModel):
 
 class LearnedPattern(BaseModel):
     """A pattern learned from past executions."""
+
     id: str
     pattern_type: str  # e.g., "successful_approach", "failed_approach"
     context: Dict[str, Any]
@@ -91,6 +98,7 @@ class LearnedPattern(BaseModel):
 
 class AdaptationUpdate(BaseModel):
     """Update from the Adaptation Agent."""
+
     goal_id: str
     patterns_learned: List[LearnedPattern] = Field(default_factory=list)
     strategies_updated: List[str] = Field(default_factory=list)
@@ -99,6 +107,7 @@ class AdaptationUpdate(BaseModel):
 
 class HumanInputRequest(BaseModel):
     """Request for human input."""
+
     id: str
     goal_id: str
     task_id: Optional[str] = None
@@ -112,6 +121,7 @@ class HumanInputRequest(BaseModel):
 
 class ReasoningStep(BaseModel):
     """A single step in chain-of-thought reasoning."""
+
     step_number: int
     thought: str
     conclusion: Optional[str] = None
@@ -119,6 +129,7 @@ class ReasoningStep(BaseModel):
 
 class ReasoningResult(BaseModel):
     """Result of reasoning process."""
+
     problem: str
     steps: List[ReasoningStep]
     final_solution: str
@@ -128,6 +139,7 @@ class ReasoningResult(BaseModel):
 
 class GoalSession(BaseModel):
     """A complete session of goal execution."""
+
     id: str
     goal: Goal
     execution_plan: ExecutionPlan
@@ -137,4 +149,3 @@ class GoalSession(BaseModel):
     reasoning_results: List[ReasoningResult] = Field(default_factory=list)
     started_at: datetime = Field(default_factory=datetime.now)
     completed_at: Optional[datetime] = None
-
